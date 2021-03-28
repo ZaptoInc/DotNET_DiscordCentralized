@@ -1,10 +1,12 @@
 ﻿Imports Flurl.Http
+Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
-Namespace Core
-    Public Class WebResponse(Of T)
-        Public Headers As Dictionary(Of String, String)
-        Public AsJSON As Object
+Namespace Core.Web
+    Public Class Response(Of T)
+        Public Headers As New Headers
+        Public AsString As String
+        Public AsJSON As JToken
         Public AsObject As T
         Public Status As Integer? = Nothing
 
@@ -13,16 +15,23 @@ Namespace Core
         End Sub
 
         Sub New(resp As IFlurlResponse)
-            Headers = New Dictionary(Of String, String)
+            Dim temp_headers = New Dictionary(Of String, String)
             For Each header In resp.Headers
-                Headers.Add(header.Name, header.Value)
+                temp_headers.Add(header.Name.ToLower, header.Value)
             Next
-            AsJSON = resp.GetJsonAsync().Result
+            Headers.AsDictionary = temp_headers
+            AsString = resp.GetStringAsync().Result
             Try
-                AsObject = JObject.FromObject(AsJSON).ToObject(Of T)
-            Catch
+                AsJSON = JsonConvert.DeserializeObject(Of Object)(AsString)
+            Catch ex As Exception
+                Console.WriteLine("AsJSON 1: " & ex.ToString)
             End Try
 
+            Try
+                AsObject = JsonConvert.DeserializeObject(Of T)(AsString)
+            Catch ex As Exception
+                Console.WriteLine("AsObject: " & ex.ToString)
+            End Try
             Status = resp.StatusCode
         End Sub
 

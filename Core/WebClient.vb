@@ -17,25 +17,25 @@ Namespace Core
             webrequest = request
         End Sub
 
-        Async Function GetAsync(Of T)(Optional AllowAnyHttpStatus As Boolean = True) As Task(Of WebResponse(Of T))
+        Async Function GetAsync(Of T)(Optional AllowAnyHttpStatus As Boolean = True) As Task(Of Web.Response(Of T))
             Try
                 If AllowAnyHttpStatus Then
                     webrequest = webrequest.AllowAnyHttpStatus
                 End If
-                Return New WebResponse(Of T)(Await webrequest.GetAsync())
+                Return New Web.Response(Of T)(Await webrequest.GetAsync())
             Catch ex As FlurlHttpException
-                Return New WebResponse(Of T)(ex)
+                Return New Web.Response(Of T)(ex)
             End Try
         End Function
 
-        Async Function PostJsonAsync(Of T)(data As Object, Optional AllowAnyHttpStatus As Boolean = True) As Task(Of WebResponse(Of T))
+        Async Function PostJsonAsync(Of T)(data As Object, Optional AllowAnyHttpStatus As Boolean = True) As Task(Of Web.Response(Of T))
             Try
                 If AllowAnyHttpStatus Then
                     webrequest = webrequest.AllowAnyHttpStatus
                 End If
-                Return New WebResponse(Of T)(Await webrequest.PostJsonAsync(data))
+                Return New Web.Response(Of T)(Await webrequest.PostJsonAsync(data))
             Catch ex As FlurlHttpException
-                Return New WebResponse(Of T)(ex)
+                Return New Web.Response(Of T)(ex)
             End Try
         End Function
     End Class
