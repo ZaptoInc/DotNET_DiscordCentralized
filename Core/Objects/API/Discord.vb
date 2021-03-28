@@ -35,15 +35,15 @@ Namespace Core
 #End Region
 
 #Region "Public Functions"
-        Public Async Function GetUserAsync(ByVal id As ULong) As Task(Of Discord.User)
+        Public Async Function GetUserAsync(ByVal id As ULong) As Task(Of Discord.MinimalUser)
             Dim raw = Await GetRawUserAsync(id)
             Return raw.AsObject
         End Function
 
-        Public Async Function GetRawUserAsync(ByVal id As ULong) As Task(Of WebResponse(Of Discord.User))
+        Public Async Function GetRawUserAsync(ByVal id As ULong) As Task(Of WebResponse(Of Discord.MinimalUser))
             Dim request As IFlurlRequest = BaseURL.AppendPathSegments("users", id).WithHeader("authorization", GetAuthToken())
             Dim web As New WebClient(request)
-            Return Await web.GetAsync(Of Discord.User)
+            Return Await web.GetAsync(Of Discord.MinimalUser)
         End Function
 
         Public Async Function GetCurrentUserAsync() As Task(Of Discord.User)

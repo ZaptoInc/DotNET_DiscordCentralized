@@ -100,6 +100,83 @@ Namespace Core.Discord
                 internal_bot = value
             End Set
         End Property
+
+        <JsonProperty("mfa_enabled", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_mfa_enabled As Boolean? = Nothing
+
+        <JsonIgnore>
+        Property MfaEnabled As Boolean
+            Get
+                If internal_mfa_enabled.HasValue Then
+                    Return internal_mfa_enabled
+                Else
+                    Return False
+                End If
+            End Get
+            Private Set(value As Boolean)
+                internal_mfa_enabled = value
+            End Set
+        End Property
+
+        <JsonProperty("locale", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_locale As String = Nothing
+
+        <JsonIgnore>
+        Property Locale As String
+            Get
+                Return internal_locale
+            End Get
+            Private Set(value As String)
+                internal_locale = value
+            End Set
+        End Property
+
+        <JsonProperty("verified", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_verified As Boolean? = Nothing
+
+        <JsonIgnore>
+        Property Verified As Boolean
+            Get
+                If internal_verified.HasValue Then
+                    Return internal_verified
+                Else
+                    Return False
+                End If
+            End Get
+            Private Set(value As Boolean)
+                internal_verified = value
+            End Set
+        End Property
+
+        <JsonProperty("email", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_email As String = Nothing
+
+        <JsonIgnore>
+        Property Email As String
+            Get
+                Return internal_email
+            End Get
+            Private Set(value As String)
+                internal_email = value
+            End Set
+        End Property
+
+        <JsonProperty("premium_type", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_premium_type As UserPremiumType? = Nothing
+
+        <JsonIgnore>
+        Property PremiumType As UserPremiumType
+            Get
+                If internal_premium_type.HasValue Then
+                    Return internal_premium_type
+                Else
+                    Return UserPremiumType.None
+                End If
+            End Get
+            Private Set(value As UserPremiumType)
+                internal_premium_type = value
+            End Set
+        End Property
     End Class
 End Namespace
 
