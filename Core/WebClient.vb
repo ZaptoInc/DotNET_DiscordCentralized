@@ -6,6 +6,8 @@ Namespace Core
     Public Class WebClient
         Private webrequest As IFlurlRequest
 
+        Private UserAgent As String = "DiscordCentralized"
+
         Sub New()
 
         End Sub
@@ -22,6 +24,7 @@ Namespace Core
                 If AllowAnyHttpStatus Then
                     webrequest = webrequest.AllowAnyHttpStatus
                 End If
+                webrequest.WithHeader("User-Agent", UserAgent)
                 Return New Web.Response(Of T)(Await webrequest.GetAsync())
             Catch ex As FlurlHttpException
                 Return New Web.Response(Of T)(ex)
