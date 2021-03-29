@@ -86,6 +86,7 @@ Namespace Core
             If request.AsObject IsNot Nothing Then
                 If request.AsObject.Count > 0 Then
                     For Each guild In request.AsObject
+                        guild.WithClient(Me)
                         current.Add(guild)
                     Next
                     If request.AsObject.Count < 100 Then

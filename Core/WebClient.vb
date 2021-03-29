@@ -36,6 +36,7 @@ Namespace Core
                 If AllowAnyHttpStatus Then
                     webrequest = webrequest.AllowAnyHttpStatus
                 End If
+                webrequest.WithHeader("User-Agent", UserAgent)
                 Return New Web.Response(Of T)(Await webrequest.PostJsonAsync(data))
             Catch ex As FlurlHttpException
                 Return New Web.Response(Of T)(ex)

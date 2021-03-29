@@ -23,14 +23,12 @@ Namespace Core.Web
             AsString = resp.GetStringAsync().Result
             Try
                 AsJSON = JsonConvert.DeserializeObject(Of Object)(AsString)
-            Catch ex As Exception
-                Console.WriteLine("AsJSON 1: " & ex.ToString)
+            Catch
             End Try
 
             Try
                 AsObject = JsonConvert.DeserializeObject(Of T)(AsString)
-            Catch ex As Exception
-                Console.WriteLine("AsObject: " & ex.ToString)
+            Catch
             End Try
             Status = resp.StatusCode
         End Sub

@@ -4,6 +4,9 @@ Namespace Core.Discord
     Public Class CurrentGuild
 
         <JsonIgnore>
+        Private internal_client As DiscordAPI
+
+        <JsonIgnore>
         Private internal_id As ULong?
 
         <JsonProperty("id")>
@@ -81,6 +84,29 @@ Namespace Core.Discord
                 internal_owner = value
             End Set
         End Property
+
+        <JsonProperty("permissions", NullValueHandling:=NullValueHandling.Ignore)>
+        Private internal_permissions As DiscordGuildPermission? = Nothing
+
+        <JsonIgnore>
+        Property Permissions As DiscordGuildPermission
+            Get
+                Return internal_permissions
+            End Get
+            Private Set(value As DiscordGuildPermission)
+                internal_permissions = value
+            End Set
+        End Property
+
+        Function WithClient(client As DiscordAPI) As CurrentGuild
+            Me.internal_client = client
+            Return Me
+        End Function
+
+        Function GetGuild() As Guild
+
+        End Function
+
     End Class
 End Namespace
 

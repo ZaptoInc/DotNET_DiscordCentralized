@@ -2,7 +2,7 @@
 
 Namespace Core.Discord
     <Flags>
-    Public Enum GuildPermission As ULong
+    Public Enum DiscordGuildPermission As ULong
         CreateInstantInvite = 1
         KickMembers = 2
         BanMembers = 4
