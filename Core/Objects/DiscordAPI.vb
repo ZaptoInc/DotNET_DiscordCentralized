@@ -119,6 +119,23 @@ Namespace Core
             End If
             Return result
         End Function
+
+        Public Async Function GetGuildAsync(ByVal id As ULong) As Task(Of Discord.Guild)
+            Dim raw = Await GetRawGuildAsync(id)
+            Return raw.AsObject
+        End Function
+
+        Public Async Function GetRawGuildAsync(ByVal id As ULong) As Task(Of Web.Response(Of Discord.Guild))
+            Dim request As IFlurlRequest = BaseURL.AppendPathSegments("guilds", id).WithHeader("authorization", GetAuthToken()).SetQueryParam("with_counts", "true")
+            Dim web As New WebClient(request)
+            Dim result = Await web.GetAsync(Of Discord.Guild)
+            Dim ratelimit = New Discord.RateLimit(result.Headers)
+            Await ratelimit.AwaitRateLimit
+            If result.Status = 429 Then
+                Return Await GetRawGuildAsync(id)
+            End If
+            Return result
+        End Function
 #End Region
 
 
