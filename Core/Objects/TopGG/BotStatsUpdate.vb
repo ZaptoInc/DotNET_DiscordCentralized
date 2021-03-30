@@ -11,7 +11,7 @@ Namespace Core.TopGG
             Get
                 Return internal_bot_id
             End Get
-            Private Set(value As ULong)
+            Set(value As ULong)
                 internal_bot_id = value
             End Set
         End Property
@@ -24,7 +24,7 @@ Namespace Core.TopGG
             Get
                 Return internal_server_count
             End Get
-            Private Set(value As Integer)
+            Set(value As Integer)
                 internal_server_count = value
             End Set
         End Property
@@ -37,7 +37,7 @@ Namespace Core.TopGG
             Get
                 Return internal_shards
             End Get
-            Private Set(value As List(Of Integer))
+            Set(value As List(Of Integer))
                 internal_shards = value
             End Set
         End Property
@@ -50,7 +50,7 @@ Namespace Core.TopGG
             Get
                 Return internal_shard_id
             End Get
-            Private Set(value As Integer?)
+            Set(value As Integer?)
                 internal_shard_id = value
             End Set
         End Property
@@ -63,7 +63,7 @@ Namespace Core.TopGG
             Get
                 Return internal_shard_count
             End Get
-            Private Set(value As Integer?)
+            Set(value As Integer?)
                 internal_shard_count = value
             End Set
         End Property

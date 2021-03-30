@@ -4,7 +4,7 @@ Imports Newtonsoft.Json.Linq
 
 Namespace Core.Web
     Public Class Response(Of T)
-        Public Headers As New Headers
+        Public Headers As Flurl.Util.IReadOnlyNameValueList(Of String)
         Public AsString As String
         Public AsJSON As JToken
         Public AsObject As T
@@ -15,11 +15,7 @@ Namespace Core.Web
         End Sub
 
         Sub New(resp As IFlurlResponse)
-            Dim temp_headers = New Dictionary(Of String, String)
-            For Each header In resp.Headers
-                temp_headers.Add(header.Name.ToLower, header.Value)
-            Next
-            Headers.AsDictionary = temp_headers
+            Headers = resp.Headers
             AsString = resp.GetStringAsync().Result
             Try
                 AsJSON = JsonConvert.DeserializeObject(Of Object)(AsString)

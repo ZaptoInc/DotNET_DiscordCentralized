@@ -58,6 +58,23 @@ Namespace Core
             End If
             Return result
         End Function
+
+        Public Async Function UpdateBotStatsAsync(ByVal update As TopGG.BotStatsUpdate) As Task
+            Dim raw = Await PostRawUpdateBotStats(update)
+            Return
+        End Function
+
+        Public Async Function PostRawUpdateBotStats(ByVal update As TopGG.BotStatsUpdate) As Task(Of Web.Response(Of Object))
+            Dim request As IFlurlRequest = BaseURL.AppendPathSegments("bots", update.BotID, "stats").WithHeader("authorization", GetAuthToken())
+            Dim web As New WebClient(request)
+            Dim result = Await web.PostJsonAsync(Of Object)(update)
+            If result.Status = 429 Then
+                'Return Await GetRawUserAsync(id)
+            ElseIf result.Status = 404 Then
+                Return Nothing
+            End If
+            Return result
+        End Function
 #End Region
 
 
