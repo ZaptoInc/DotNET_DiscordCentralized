@@ -35,7 +35,26 @@ Namespace Core
             Dim web As New WebClient(request)
             Dim result = Await web.GetAsync(Of TopGG.User)
             If result.Status = 429 Then
-                Return Await GetRawUserAsync(id)
+                'Return Await GetRawUserAsync(id)
+            ElseIf result.Status = 404 Then
+                Return Nothing
+            End If
+            Return result
+        End Function
+
+        Public Async Function GetBotAsync(ByVal id As ULong) As Task(Of TopGG.User)
+            Dim raw = Await GetRawBotAsync(id)
+            Return raw.AsObject
+        End Function
+
+        Public Async Function GetRawBotAsync(ByVal id As ULong) As Task(Of Web.Response(Of TopGG.User))
+            Dim request As IFlurlRequest = BaseURL.AppendPathSegments("bots", id).WithHeader("authorization", GetAuthToken())
+            Dim web As New WebClient(request)
+            Dim result = Await web.GetAsync(Of TopGG.User)
+            If result.Status = 429 Then
+                'Return Await GetRawUserAsync(id)
+            ElseIf result.Status = 404 Then
+                Return Nothing
             End If
             Return result
         End Function
