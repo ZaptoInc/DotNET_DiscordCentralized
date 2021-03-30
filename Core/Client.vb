@@ -2,6 +2,7 @@ Namespace Core
     Public Class DiscordCentralizedClient
 #Region "Internal Objects"
         Private Internal_Discord As DiscordAPI = Nothing
+        Private Internal_TopGG As TopGGAPI = Nothing
 #End Region
 
 #Region "External Objects"
@@ -13,12 +14,26 @@ Namespace Core
                 Internal_Discord = value
             End Set
         End Property
+
+        Property TopGG As TopGGAPI
+            Get
+                Return Internal_TopGG
+            End Get
+            Private Set(value As TopGGAPI)
+                Internal_TopGG = value
+            End Set
+        End Property
 #End Region
 
 
 #Region "Initialization Settings"
         Public Function WithDiscordToken(token As String, Optional token_type As DiscordAPITokenType = DiscordAPITokenType.Bot) As DiscordCentralizedClient
             Discord = New DiscordAPI(token, token_type)
+            Return Me
+        End Function
+
+        Public Function WithTopGGToken(token As String) As DiscordCentralizedClient
+            TopGG = New TopGGAPI(token)
             Return Me
         End Function
 #End Region
