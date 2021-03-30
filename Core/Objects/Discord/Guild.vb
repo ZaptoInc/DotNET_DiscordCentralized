@@ -238,7 +238,18 @@ Namespace Core.Discord
             End Set
         End Property
 
-        'roles
+        <JsonProperty("roles")>
+        Private internal_roles As List(Of Role) = Nothing
+
+        <JsonIgnore>
+        Property Roles As List(Of Role)
+            Get
+                Return internal_roles
+            End Get
+            Private Set(value As List(Of Role))
+                internal_roles = value
+            End Set
+        End Property
 
         'emojis
 

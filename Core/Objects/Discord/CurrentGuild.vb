@@ -85,8 +85,18 @@ Namespace Core.Discord
             End Set
         End Property
 
-        <JsonProperty("permissions", NullValueHandling:=NullValueHandling.Ignore)>
-        Private internal_permissions As DiscordGuildPermission? = Nothing
+        <JsonIgnore>
+        Private internal_permissions As DiscordGuildPermission
+
+        <JsonProperty("permissions")>
+        Property RawPermissions As String
+            Get
+                Return CUInt(internal_permissions)
+            End Get
+            Private Set(value As String)
+                internal_permissions = CUInt(value)
+            End Set
+        End Property
 
         <JsonIgnore>
         Property Permissions As DiscordGuildPermission
@@ -103,8 +113,8 @@ Namespace Core.Discord
             Return Me
         End Function
 
-        Function GetGuild() As Guild
-
+        Async Function GetGuildAsync() As Task(Of Guild)
+            Return Await Me.internal_client.GetGuildAsync(Me.ID)
         End Function
 
     End Class
