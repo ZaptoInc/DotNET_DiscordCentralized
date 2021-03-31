@@ -22,14 +22,14 @@ Namespace Core.Discord
         End Property
 
         <JsonProperty("client_id", NullValueHandling:=NullValueHandling.Ignore)>
-        Property RawID As String
+        Property RawClientID As String
             Get
                 If String.IsNullOrWhiteSpace(internal_url) Then
                     Return Nothing
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("client_id") Then
-                        Return internal_flurl.QueryParams("client_id").Value
+                        Return internal_flurl.QueryParams.GetAll("client_id").First
                     Else
                         Return Nothing
                     End If
@@ -48,7 +48,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("client_id") Then
-                        Return internal_flurl.QueryParams("client_id").Value
+                        Return internal_flurl.QueryParams.GetAll("client_id").First
                     Else
                         Return Nothing
                     End If
@@ -67,7 +67,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("response_type") Then
-                        Return internal_flurl.QueryParams("response_type").Value
+                        Return internal_flurl.QueryParams.GetAll("response_type").First
                     Else
                         Return Nothing
                     End If
@@ -86,7 +86,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("scope") Then
-                        Return internal_flurl.QueryParams("scope").Value
+                        Return internal_flurl.QueryParams.GetAll("scope").First
                     Else
                         Return Nothing
                     End If
@@ -105,7 +105,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("state") Then
-                        Return internal_flurl.QueryParams("state").Value
+                        Return internal_flurl.QueryParams.GetAll("state").First
                     Else
                         Return Nothing
                     End If
@@ -124,7 +124,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("redirect_uri") Then
-                        Return internal_flurl.QueryParams("redirect_uri").Value
+                        Return internal_flurl.QueryParams.GetAll("redirect_uri").First
                     Else
                         Return Nothing
                     End If
@@ -143,7 +143,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("permissions") Then
-                        Return internal_flurl.QueryParams("permissions").Value
+                        Return internal_flurl.QueryParams.GetAll("permissions").First
                     Else
                         Return Nothing
                     End If
@@ -162,7 +162,7 @@ Namespace Core.Discord
                 Else
                     Dim internal_flurl As Flurl.Url = internal_url
                     If internal_flurl.QueryParams.Contains("permissions") Then
-                        Return internal_flurl.QueryParams("permissions").Value
+                        Return internal_flurl.QueryParams.GetAll("permissions").First
                     Else
                         Return Nothing
                     End If
@@ -178,7 +178,7 @@ Namespace Core.Discord
         End Sub
 
         Sub New(url As String)
-            Me.Url = url
+            internal_url = url
         End Sub
     End Class
 End Namespace
