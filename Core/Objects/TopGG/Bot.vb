@@ -283,30 +283,28 @@ Namespace Core.TopGG
             End Set
         End Property
 
-        <JsonIgnore>
-        Private internal_invite As Discord.OauthUrl
-
-        <JsonProperty("invite", NullValueHandling:=NullValueHandling.Ignore)>
-        Property RawInvite As String
-            Get
-                If internal_invite IsNot Nothing Then
-                    Return internal_invite.Url
-                Else
-                    Return Nothing
-                End If
-            End Get
-            Private Set(value As String)
-                internal_invite = New Discord.OauthUrl(value)
-            End Set
-        End Property
+        <JsonProperty("invite")>
+        Private internal_invite As String
 
         <JsonIgnore>
         Property Invite As Discord.OauthUrl
             Get
-                Return internal_invite
+                If Not String.IsNullOrWhiteSpace(internal_invite) Then
+                    Return New Discord.OauthUrl(internal_invite)
+                Else
+                    Return Nothing
+                End If
             End Get
             Private Set(value As Discord.OauthUrl)
-                internal_invite = value
+                If value IsNot Nothing Then
+                    If Not String.IsNullOrWhiteSpace(value.Url) Then
+                        internal_invite = value.Url
+                    Else
+                        internal_invite = Nothing
+                    End If
+                Else
+                    internal_invite = Nothing
+                End If
             End Set
         End Property
 
@@ -346,7 +344,7 @@ Namespace Core.TopGG
             End Set
         End Property
 
-        <JsonProperty("vanity")>
+        <JsonProperty("vanity", NullValueHandling:=NullValueHandling.Ignore)>
         Private internal_vanity As String = Nothing
 
         <JsonIgnore>
@@ -385,16 +383,16 @@ Namespace Core.TopGG
             End Set
         End Property
 
-        <JsonProperty("monthlyPonumbers")>
-        Private internal_monthlyPonumbers As Integer
+        <JsonProperty("monthlyPoints")>
+        Private internal_monthlyPoints As Integer
 
         <JsonIgnore>
         Property MonthlyUpvotes As Integer
             Get
-                Return internal_monthlyPonumbers
+                Return internal_monthlyPoints
             End Get
             Private Set(value As Integer)
-                internal_monthlyPonumbers = value
+                internal_monthlyPoints = value
             End Set
         End Property
 
@@ -411,12 +409,15 @@ Namespace Core.TopGG
                 End If
             End Get
             Private Set(value As String)
-                If String.IsNullOrWhiteSpace(value) Then
-                    internal_donatebotguildid = Nothing
-                Else
-                    internal_donatebotguildid = value
-                End If
-                internal_id = value
+                Try
+                    If String.IsNullOrWhiteSpace(value) Then
+                        internal_donatebotguildid = Nothing
+                    Else
+                        internal_donatebotguildid = value
+                    End If
+                Catch
+                End Try
+
             End Set
         End Property
 
@@ -427,6 +428,45 @@ Namespace Core.TopGG
             End Get
             Private Set(value As ULong?)
                 internal_donatebotguildid = value
+            End Set
+        End Property
+
+        <JsonProperty("server_count")>
+        Private internal_server_count As Integer?
+
+        <JsonIgnore>
+        Property ServerCount As Integer
+            Get
+                Return internal_server_count
+            End Get
+            Set(value As Integer)
+                internal_server_count = value
+            End Set
+        End Property
+
+        <JsonProperty("shards")>
+        Private internal_shards As List(Of Integer) = Nothing
+
+        <JsonIgnore>
+        Property Shards As List(Of Integer)
+            Get
+                Return internal_shards
+            End Get
+            Set(value As List(Of Integer))
+                internal_shards = value
+            End Set
+        End Property
+
+        <JsonProperty("shard_count")>
+        Private internal_shard_count As Integer?
+
+        <JsonIgnore>
+        Property ShardCount As Integer?
+            Get
+                Return internal_shard_count
+            End Get
+            Set(value As Integer?)
+                internal_shard_count = value
             End Set
         End Property
     End Class
