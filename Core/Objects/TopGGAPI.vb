@@ -50,7 +50,7 @@ Namespace Core
         Public Async Function GetRawBotAsync(ByVal id As ULong) As Task(Of Web.Response(Of TopGG.Bot))
             Dim request As IFlurlRequest = BaseURL.AppendPathSegments("bots", id).WithHeader("authorization", GetAuthToken())
             Dim web As New WebClient(request)
-            Dim result = Await web.GetAsync(Of TopGG.User)
+            Dim result = Await web.GetAsync(Of TopGG.Bot)
             If result.Status = 429 Then
                 'Return Await GetRawUserAsync(id)
             ElseIf result.Status = 404 Then
