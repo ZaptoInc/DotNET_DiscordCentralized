@@ -21,6 +21,25 @@ Namespace Core.Discord
             End Set
         End Property
 
+        <JsonProperty("client_id", NullValueHandling:=NullValueHandling.Ignore)>
+        Property RawID As String
+            Get
+                If String.IsNullOrWhiteSpace(internal_url) Then
+                    Return Nothing
+                Else
+                    Dim internal_flurl As Flurl.Url = internal_url
+                    If internal_flurl.QueryParams.Contains("client_id") Then
+                        Return internal_flurl.QueryParams("client_id").Value
+                    Else
+                        Return Nothing
+                    End If
+                End If
+            End Get
+            Private Set(value As String)
+
+            End Set
+        End Property
+
         <JsonIgnore>
         Property ClientID As ULong?
             Get
@@ -40,7 +59,7 @@ Namespace Core.Discord
             End Set
         End Property
 
-        <JsonIgnore>
+        <JsonProperty("response_type", NullValueHandling:=NullValueHandling.Ignore)>
         Property ResponseType As String
             Get
                 If String.IsNullOrWhiteSpace(internal_url) Then
@@ -59,7 +78,7 @@ Namespace Core.Discord
             End Set
         End Property
 
-        <JsonIgnore>
+        <JsonProperty("scope", NullValueHandling:=NullValueHandling.Ignore)>
         Property Scope As String
             Get
                 If String.IsNullOrWhiteSpace(internal_url) Then
@@ -78,7 +97,7 @@ Namespace Core.Discord
             End Set
         End Property
 
-        <JsonIgnore>
+        <JsonProperty("state", NullValueHandling:=NullValueHandling.Ignore)>
         Property State As String
             Get
                 If String.IsNullOrWhiteSpace(internal_url) Then
@@ -97,7 +116,7 @@ Namespace Core.Discord
             End Set
         End Property
 
-        <JsonIgnore>
+        <JsonProperty("redirect_uri", NullValueHandling:=NullValueHandling.Ignore)>
         Property RedirectURI As String
             Get
                 If String.IsNullOrWhiteSpace(internal_url) Then
@@ -112,6 +131,44 @@ Namespace Core.Discord
                 End If
             End Get
             Private Set(value As String)
+
+            End Set
+        End Property
+
+        <JsonProperty("permissions", NullValueHandling:=NullValueHandling.Ignore)>
+        Property RawPermissions As String
+            Get
+                If String.IsNullOrWhiteSpace(internal_url) Then
+                    Return Nothing
+                Else
+                    Dim internal_flurl As Flurl.Url = internal_url
+                    If internal_flurl.QueryParams.Contains("permissions") Then
+                        Return internal_flurl.QueryParams("permissions").Value
+                    Else
+                        Return Nothing
+                    End If
+                End If
+            End Get
+            Private Set(value As String)
+
+            End Set
+        End Property
+
+        <JsonIgnore>
+        Property Permissions As DiscordGuildPermission?
+            Get
+                If String.IsNullOrWhiteSpace(internal_url) Then
+                    Return Nothing
+                Else
+                    Dim internal_flurl As Flurl.Url = internal_url
+                    If internal_flurl.QueryParams.Contains("permissions") Then
+                        Return internal_flurl.QueryParams("permissions").Value
+                    Else
+                        Return Nothing
+                    End If
+                End If
+            End Get
+            Private Set(value As DiscordGuildPermission?)
 
             End Set
         End Property
