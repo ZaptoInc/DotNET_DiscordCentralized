@@ -27,6 +27,29 @@ Namespace Core.TopGG
             End Set
         End Property
 
+        <JsonIgnore>
+        Private internal_clientid As ULong?
+
+        <JsonProperty("clientid")>
+        Property RawClientID As String
+            Get
+                Return internal_clientid
+            End Get
+            Private Set(value As String)
+                internal_clientid = value
+            End Set
+        End Property
+
+        <JsonIgnore>
+        Property ClientID As ULong
+            Get
+                Return internal_clientid
+            End Get
+            Private Set(value As ULong)
+                internal_clientid = value
+            End Set
+        End Property
+
         <JsonProperty("username")>
         Private internal_username As String = Nothing
 
@@ -285,6 +308,16 @@ Namespace Core.TopGG
 
         <JsonProperty("invite")>
         Private internal_invite As String
+
+        <JsonIgnore>
+        Property RawInvite As String
+            Get
+                Return internal_invite
+            End Get
+            Private Set(value As String)
+                internal_invite = value
+            End Set
+        End Property
 
         <JsonIgnore>
         Property Invite As Discord.OauthUrl
