@@ -42,12 +42,12 @@ Namespace Core
             Return result
         End Function
 
-        Public Async Function GetBotAsync(ByVal id As ULong) As Task(Of TopGG.User)
+        Public Async Function GetBotAsync(ByVal id As ULong) As Task(Of TopGG.Bot)
             Dim raw = Await GetRawBotAsync(id)
             Return raw.AsObject
         End Function
 
-        Public Async Function GetRawBotAsync(ByVal id As ULong) As Task(Of Web.Response(Of TopGG.User))
+        Public Async Function GetRawBotAsync(ByVal id As ULong) As Task(Of Web.Response(Of TopGG.Bot))
             Dim request As IFlurlRequest = BaseURL.AppendPathSegments("bots", id).WithHeader("authorization", GetAuthToken())
             Dim web As New WebClient(request)
             Dim result = Await web.GetAsync(Of TopGG.User)
